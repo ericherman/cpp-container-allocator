@@ -471,21 +471,22 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       if (this->_M_impl._M_node._M_next != &this->_M_impl._M_node
 	  && this->_M_impl._M_node._M_next->_M_next != &this->_M_impl._M_node)
       {
-        list __carry(get_allocator());
+	list __carry(get_allocator());
 
-	const size_t __max_tmp_lists = 64; // sizeof(size_t) * CHAR_BIT
+	const int __max_tmp_lists = 64; // sizeof(size_t) * CHAR_BIT
 	unsigned char __tmp_buf[sizeof(list) * __max_tmp_lists];
 	list *__tmp = reinterpret_cast<list *>(__tmp_buf);
-	for (size_t i = 0; i < __max_tmp_lists; ++i)
-	  {
-	    void *__tmp_i = &__tmp[i];
-	    new (__tmp_i) list(get_allocator());
-	  }
-
-        list * __fill = __tmp;
-        list * __counter;
+	int __num_lists;
 	__try
 	  {
+	    for (__num_lists = 0; __num_lists < __max_tmp_lists; ++__num_lists)
+	      {
+		void *__tmp_list = &__tmp[__num_lists];
+		new (__tmp_list) list(get_allocator());
+	      }
+
+            list * __fill = __tmp;
+            list * __counter;
 	    do
 	      {
 		__carry.splice(__carry.begin(), *this, begin());
@@ -510,10 +511,16 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
 	__catch(...)
 	  {
 	    this->splice(this->end(), __carry);
-	    for (int __i = 0; __i < sizeof(__tmp)/sizeof(__tmp[0]); ++__i)
-	      this->splice(this->end(), __tmp[__i]);
+	    for (int __i = 0; __i < __num_lists; ++__i)
+	      {
+		this->splice(this->end(), __tmp[__i]);
+		__tmp[__i].~list();
+	      }
 	    __throw_exception_again;
 	  }
+
+	for (int __i = 0; __i < __num_lists; ++__i)
+	  __tmp[__i].~list();
       }
     }
 
