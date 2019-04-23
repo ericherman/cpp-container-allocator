@@ -471,8 +471,75 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       if (this->_M_impl._M_node._M_next != &this->_M_impl._M_node
 	  && this->_M_impl._M_node._M_next->_M_next != &this->_M_impl._M_node)
       {
-        list __carry;
-        list __tmp[64];
+        list __carry(get_allocator());
+
+        list __tmp[64] = {
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator()),
+		list(get_allocator())
+	};
+
         list * __fill = __tmp;
         list * __counter;
 	__try
