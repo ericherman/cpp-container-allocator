@@ -464,10 +464,11 @@ _GLIBCXX_BEGIN_NAMESPACE_CXX11
       _M_get_Node_allocator() const _GLIBCXX_NOEXCEPT
       { return _M_impl; }
 
-
-      _List_base() _GLIBCXX_NOEXCEPT_IF(
-            is_nothrow_default_constructible<_Node_alloc_type>::value)
-	{}
+#if __cplusplus >= 201103L
+      _List_base() = default;
+#else
+      _List_base() { }
+#endif
 
       _List_base(const _Node_alloc_type& __a) _GLIBCXX_NOEXCEPT
       : _M_impl(__a)
@@ -676,9 +677,11 @@ _GLIBCXX_BEGIN_NAMESPACE_CXX11
       /**
        *  @brief  Creates a %list with no elements.
        */
-	list() _GLIBCXX_NOEXCEPT_IF(
-	    is_nothrow_default_constructible<_Node_alloc_type>::value)
-	{}
+#if __cplusplus >= 201103L
+      list() = default;
+#else
+      list() { }
+#endif
 
       /**
        *  @brief  Creates a %list with no elements.
@@ -939,8 +942,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CXX11
       /// Get a copy of the memory allocation object.
       allocator_type
       get_allocator() const _GLIBCXX_NOEXCEPT
-      //{ return allocator_type(_Base::_M_get_Node_allocator()); }
-      { return allocator_type(this->_M_impl); }
+      { return allocator_type(_Base::_M_get_Node_allocator()); }
 
       // iterators
       /**
