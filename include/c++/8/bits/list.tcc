@@ -473,72 +473,14 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
       {
         list __carry(get_allocator());
 
-        list __tmp[64] = {
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator()),
-		list(get_allocator())
-	};
+	const size_t __max_tmp_lists = 64; // sizeof(size_t) * CHAR_BIT
+	unsigned char __tmp_buf[sizeof(list) * __max_tmp_lists];
+	list *__tmp = reinterpret_cast<list *>(__tmp_buf);
+	for (size_t i = 0; i < __max_tmp_lists; ++i)
+	  {
+	    void *__tmp_i = &__tmp[i];
+	    new (__tmp_i) list(get_allocator());
+	  }
 
         list * __fill = __tmp;
         list * __counter;
