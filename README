@@ -1,3 +1,17 @@
+@EricHerman first encountered the issue with containers not
+being friendly to custom allocators requiring arguments in
+the MySQL codebase:
+https://github.com/mysql/mysql-server/blob/8.0/sql/auth/sql_auth_cache.h#L319..L347
+
+@cvicentiu, helped identify the problem, consider a solution and pointed to
+https://en.cppreference.com/w/cpp/named_req/AllocatorAwareContainer
+And
+https://stackoverflow.com/questions/40683637/how-to-create-a-c-11-non-default-constructible-allocator
+which has a link to a suggestion that microsoft has fixed this in VisualStudio:
+https://stackoverflow.com/questions/40622430/stdlistsort-why-the-sudden-switch-to-top-down-strategy
+
+@kms15 sat with @EricHerman to work on the actual implmentation which can be found here.
+
 License
 -------
 This modifies part of the GNU ISO C++ Library.
