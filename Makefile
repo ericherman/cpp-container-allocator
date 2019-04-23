@@ -3,21 +3,17 @@ CXX := g++
 #CXX := clang++
 endif
 
-default: fix
+default: patched
 
-demo: arg-allocator.cpp
-	$(CXX) -o demo arg-allocator.cpp
-	./demo
+native: arg-allocator.cpp
+	$(CXX) -o native arg-allocator.cpp
+	./native
 
-fix: arg-allocator.cpp
-	$(CXX) -o fix \
+patched: arg-allocator.cpp
+	$(CXX) -o patched \
 		-I ./include/c++/8 \
 		arg-allocator.cpp
-	./fix
-
-sad: arg-allocator.cpp
-	$(CXX) -DARG_ALLOCATOR_DEFAULT_CTR -o sad arg-allocator.cpp
-	./sad
+	./patched
 
 clean:
-	rm -fv sad demo fix *.o
+	rm -fv native patched

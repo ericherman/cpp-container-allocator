@@ -1,5 +1,5 @@
-/* foo.cpp
-   Copyright (C) 2018 Eric Herman <eric@freesa.org>
+/* arg-allocator.cpp
+   Copyright (C) 2018, 2019 Eric Herman <eric@freesa.org>
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as
@@ -14,9 +14,9 @@
 	https://www.gnu.org/licenses/lgpl-3.0.txt
 	https://www.gnu.org/licenses/gpl-3.0.txt
  */
-#include <limits>
 #include <list>
 #include <iostream>
+#include <limits>
 
 template <typename T> class ArgAllocator {
 	char my_c;
@@ -32,9 +32,6 @@ template <typename T> class ArgAllocator {
 
 	template <typename U> struct rebind { typedef ArgAllocator<U> other; };
 
-#ifdef ARG_ALLOCATOR_DEFAULT_CTR
-	ArgAllocator() { my_c = '\0'; }
-#endif
 	inline explicit ArgAllocator(char c) { my_c = c; }
 	inline ~ArgAllocator() {}
 	inline ArgAllocator(ArgAllocator const &other) { my_c = other.my_c; }
